@@ -5,11 +5,10 @@
 #include "BmpLib.h" // Cet include permet de manipuler des fichiers BMP
 #include "ESLib.h" // Pour utiliser valeurAleatoire()
 
-#define WindowLength largeurFenetre
-#define WindowHeight hauteurFenetre
+#define Longueur 10
+#define Hauteur 10
 
-
-int main()
+typedef struct
 {
-    
-}
+    int test;
+}Cell;
