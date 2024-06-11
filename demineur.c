@@ -7,3 +7,5 @@
 
 #define WindowLength 1000
 #define WindowHeight 600
+
+int robin;
