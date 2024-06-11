@@ -8,3 +8,4 @@
 #define WindowLength largeurFenetre
 #define WindowHeight hauteurFenetre
 
+int niggs;
