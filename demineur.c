@@ -13,3 +13,5 @@ int nigga;
 int nigga2;
 
 int niggaPromax; 
+
+int salut ;
