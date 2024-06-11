@@ -7,11 +7,3 @@
 
 #define WindowLength 1000
 #define WindowHeight 600
-
-int nigga;
-
-int nigga2;
-
-int niggaPromax; 
-
-int salut ;
