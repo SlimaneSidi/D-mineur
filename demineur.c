@@ -11,3 +11,5 @@
 int nigga;
 
 int nigga2;
+
+int niggaPromax; 
