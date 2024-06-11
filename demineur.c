@@ -9,3 +9,4 @@
 #define WindowHeight 600
 
 int robin;
+int lou;
