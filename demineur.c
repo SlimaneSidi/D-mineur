@@ -9,3 +9,5 @@
 #define WindowHeight 600
 
 int nigga;
+
+int nigga2;
