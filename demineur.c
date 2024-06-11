@@ -5,6 +5,6 @@
 #include "BmpLib.h" // Cet include permet de manipuler des fichiers BMP
 #include "ESLib.h" // Pour utiliser valeurAleatoire()
 
-#define WindowLength 1000
-#define WindowHeight 600
+#define WindowLength largeurFenetre
+#define WindowHeight hauteurFenetre
 
