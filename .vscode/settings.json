@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "eslib.h": "c"
+        "eslib.h": "c",
+        "bmplib.h": "c"
     }
 }

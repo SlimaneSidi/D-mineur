@@ -4,6 +4,22 @@
 #include "GfxLib.h" // Seul cet include est necessaire pour faire du graphique
 #include "BmpLib.h" // Cet include permet de manipuler des fichiers BMP
 #include "ESLib.h" // Pour utiliser valeurAleatoire()
-#include "Niveau1.h"
 
-void placeMines(int mines, int longueur, int hauteur, Case map[Longueur][Hauteur]);
+// DIFFICULTE 3
+
+#define Longueur 25
+#define Hauteur 20
+#define NbMines 10
+
+typedef struct
+{
+    int mine;
+    int closestMine;
+    int caseRevealed;
+}Case;
+
+Case map3;
+
+void initMap();
+
+void afficheMap(int IsMine);

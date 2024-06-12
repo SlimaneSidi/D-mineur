@@ -14,11 +14,7 @@ void attendre(double duree) {
     usleep(duree * DELAI);
 }
 
-int menuPrincipal(void);
-int menuJouer(void);
-void menuManuel(void);
-
-int main(void) {
+int menu(void) {
     while (menuPrincipal() != 3) {
         // boucle principale du menu, quitte si l'option 3 est choisie
     }
@@ -80,12 +76,12 @@ int menuJouer(void) {
         case 1:
         case 2:
         case 3:
-            // Ici, on lancerait le jeu avec la difficulté choisie
-            printf("Lancement du jeu en difficulté %d...\n", choix);
-            attendre(2); // Attente avant de continuer
+        case 4:
             return menuApresJeu();
+        printf("Lancement du jeu en difficulté %d...\n", choix);
+            attendre(2); // Attente avant de continuer
     }
-    return 0;
+    return choix;
 }
 
 int menuApresJeu(void) {
