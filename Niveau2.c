@@ -3,13 +3,13 @@
 #include <math.h>
 #include "includes/Niveau2.h"
 
-Case mapMoyen[Longueur][Hauteur];
+Case mapMoyen[Longueur2][Hauteur2];
 
 void initMap()
 {
-    for (int x = 0; x < Longueur; x++)
+    for (int x = 0; x < Longueur2; x++)
     {
-        for (int y = 0; y < Hauteur; y++)
+        for (int y = 0; y < Hauteur2; y++)
         {
             mapMoyen[x][y].mine = 0;
             mapMoyen[x][y].closestMine = 0;
@@ -20,9 +20,9 @@ void initMap()
 
 void afficheMap(int IsMine)
 {
-    for (int x = 0; x < Longueur; x++)
+    for (int x = 0; x < Longueur2; x++)
     {
-        for (int y = 0; y < Hauteur; y++)
+        for (int y = 0; y < Hauteur2; y++)
         {
             if (mapMoyen[x][y].caseRevealed) {
                 if (mapMoyen[x][y].mine) {

@@ -16,21 +16,59 @@ int main()
 
     countdown_timer(Timer);
     initMap();
+    CalcClosestMine();
+}
 
+void JouerNiveau1()
+{
     int x, y;
     printf("Entrez des coordonnées (x y): ");
     scanf("%d %d", &x, &y);
 
     int GAME = 0;
 
-    if (x != NULL || y != NULL)
+    if (x >= 0 || y >= 0)
     {
-        placeMines(NbMines, Longueur, Hauteur, mapFacile[x][y])
+        placeMines(NbMines1, Longueur1, Hauteur1, map1);
     }
     while (!GAME)
     {
         afficheMap(0);
     }
+}
 
+void JouerNiveau2()
+{
+    int x, y;
+    printf("Entrez des coordonnées (x y): ");
+    scanf("%d %d", &x, &y);
 
+    int GAME = 0;
+
+    if (x >= 0 || y >= 0)
+    {
+        placeMines(NbMines2, Longueur2, Hauteur2, map2);
+    }
+    while (!GAME)
+    {
+        afficheMap(0);
+    }
+}
+
+void JouerNiveau3()
+{
+    int x, y;
+    printf("Entrez des coordonnées (x y): ");
+    scanf("%d %d", &x, &y);
+
+    int GAME = 0;
+
+    if (x >= 0 || y >= 0)
+    {
+        placeMines(NbMines3, Longueur3, Hauteur3, map3);
+    }
+    while (!GAME)
+    {
+        afficheMap(0);
+    }
 }
