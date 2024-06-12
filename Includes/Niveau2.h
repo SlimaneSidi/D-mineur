@@ -9,7 +9,7 @@
 #define Hauteur2 15
 #define NbMines2 45
 
-Case map2;
+Case map2[Longueur2][Hauteur2];
 
 void initMap();
 

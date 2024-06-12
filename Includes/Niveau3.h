@@ -7,9 +7,9 @@
 
 #define Longueur3 25
 #define Hauteur3 20
-#define NbMines3 10
+#define NbMines3 100
 
-Case map3;
+Case map3[Longueur3][Hauteur3];
 
 void initMap();
 
