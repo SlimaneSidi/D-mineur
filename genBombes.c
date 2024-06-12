@@ -6,7 +6,7 @@
 #include "ESLib.h" // Pour utiliser valeurAleatoire()
 #include "genBombes.h"
 
-void placeMines(int mines, int longueur, int hauteur, Case map) {
+void placeMines(int mines, int longueur, int hauteur, Case map[Longueur][Hauteur]) {
     srand(time(NULL));
 
     int placedMines = 0;
