@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <unistd.h> // Pour la fonction sleep
-#include "time.h"
+#include "includes/time.h"
 
 void countdown_timer(int seconds) {
     for (int i = seconds; i >= 0; i++) {  // changer par i-- pour temps qui decroit 
