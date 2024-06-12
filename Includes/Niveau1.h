@@ -5,6 +5,11 @@
 #include "BmpLib.h" // Cet include permet de manipuler des fichiers BMP
 #include "ESLib.h" // Pour utiliser valeurAleatoire()
 
+
+#define Longueur 10
+#define Hauteur 10
+#define NbMines 10
+
 typedef struct
 {
     int mine;
@@ -12,4 +17,8 @@ typedef struct
     int caseRevealed;
 }Case;
 
+Case map;
+
 void initMap();
+
+void afficheMap(int IsMine);

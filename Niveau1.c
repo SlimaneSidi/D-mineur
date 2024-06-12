@@ -6,9 +6,6 @@
 #include "ESLib.h" // Pour utiliser valeurAleatoire()
 #include "Niveau1.h"
 
-#define Longueur 10
-#define Hauteur 10
-
 Case mapFacile[Longueur][Hauteur];
 
 void initMap()
@@ -24,5 +21,25 @@ void initMap()
     }
 }
 
-void afficheMap()
-
+void afficheMap(int IsMine)
+{
+    for (int x = 0; x < Longueur; x++)
+    {
+        for (int y = 0; y < Hauteur; y++)
+        {
+            if (mapFacile[x][y].caseRevealed) {
+                if (mapFacile[x][y].mine) {
+                    printf("* ");
+                } else {
+                    printf("%d ", mapFacile[x][y].closestMine);
+                }
+            } else {
+                if (IsMine && mapFacile[x][y].mine) {
+                    printf("* ");
+                } else {
+                    printf(". ");
+                }
+            }
+        }
+    }
+}

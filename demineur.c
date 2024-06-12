@@ -12,5 +12,24 @@
 
 int main()
 {
+    menu();
     countdown_timer(Timer);
+    initMap();
+
+    int x, y;
+    printf("Entrez des coordonnées (x y): ");
+    scanf("%d %d", &x, &y);
+
+    int GAME = 0;
+
+    if (x != NULL || y != NULL)
+    {
+        afficheMap(0);
+    }
+    while (!GAME)
+    {
+
+    }
+
+
 }
