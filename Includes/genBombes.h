@@ -1,3 +1,6 @@
+#ifndef GEN_BOMBES_H
+#define GEN_BOMBES_H
+
 #include <stdlib.h> // Pour pouvoir utiliser exit()
 #include <stdio.h> // Pour pouvoir utiliser printf()
 #include <math.h>
@@ -10,3 +13,5 @@ int x, y;
 void placeMines(int mines, int longueur, int hauteur, Case map);
 
 void calculateAdjacentMines(int longueur, int hauteur, Case map);
+
+#endif

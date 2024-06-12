@@ -1,3 +1,6 @@
+#ifndef NIVEAU3_H
+#define NIVEAU3_H
+
 #include <stdlib.h> // Pour pouvoir utiliser exit()
 #include <stdio.h> // Pour pouvoir utiliser printf()
 #include <math.h>
@@ -14,3 +17,5 @@ Case map3[Longueur3][Hauteur3];
 void initMap();
 
 void afficheMap(int IsMine);
+
+#endif

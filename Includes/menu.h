@@ -1,3 +1,6 @@
+#ifndef MENU_H
+#define MENU_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h> // pour usleep()
@@ -12,3 +15,5 @@ int menuJouer(void);
 void menuManuel(void);
 int menu(void);
 int menuApresJeu(void);
+
+#endif
