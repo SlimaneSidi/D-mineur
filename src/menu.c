@@ -73,9 +73,11 @@ int menuJouer(void) {
 
     switch (choix) {
         case 1:
-            
+            nbChoix(choix);
         case 2:
+            nbChoix(choix);
         case 3:
+            nbChoix(choix);
         case 4:
             return menuApresJeu();
         printf("Lancement du jeu en difficulté %d...\n", choix);

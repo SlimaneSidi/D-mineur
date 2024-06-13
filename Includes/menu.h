@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h> // pour usleep()
+#include "demineur.h"
 
 #define DELAI 1000000
 
