@@ -1,7 +1,7 @@
 #include <stdlib.h> // Pour pouvoir utiliser exit()
 #include <stdio.h> // Pour pouvoir utiliser printf()
 #include <math.h>
-#include "../includes/Niveau1.h"
+#include "../include/Niveau1.h"
 
 Case mapFacile[Longueur1][Hauteur1];
 

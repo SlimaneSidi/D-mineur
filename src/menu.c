@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h> // pour usleep()
-#include "../includes/menu.h"
+#include "../include/menu.h"
 
 #define DELAI 1000000
 

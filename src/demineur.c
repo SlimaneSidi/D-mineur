@@ -1,7 +1,7 @@
 #include <stdlib.h> // Pour pouvoir utiliser exit()
 #include <stdio.h> // Pour pouvoir utiliser printf()
 #include <math.h>
-#include "../Includes/demineur.h"
+#include "../include/demineur.h"
 
 
 int nbChoix(int choix)
@@ -78,6 +78,6 @@ int main()
     countdown_timer(Timer);
 
     JouerNiveau(difficultyChoix);
-    
+
     //CalcClosestMine();
 }
