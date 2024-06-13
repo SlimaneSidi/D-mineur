@@ -1,15 +1,31 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h> // Pour la fonction sleep
-#include "../includes/time.h"
+#include <time.h>
 
-void countdown_timer(int seconds) {
-    for (int i = seconds; i >= 0; i++) {  // changer par i-- pour temps qui decroit 
-        printf("Temps restant : %d secondes\n", i);
-        sleep(1); 
-        system("clear");
+int countdown_timer(int seconds) {
+    time_t oldTime, currentTime;
+    int chrono = 0;
+
+    // prends le temps actuel et l'assimile a old time (fonction de time.h)
+    time(&oldTime);
+
+    while (chrono < seconds) {
+
+        time(&currentTime);
+
+        if (difftime(currentTime, oldTime) >= 1) {    //peut aussi utiliser (currentTime - oldTime >= 1)
+            chrono++;
+            oldTime = currentTime;
+
+            printf("Temps ecoule: %d secondes\n", chrono);
+        }
     }
+
+    return chrono;
 }
 
+int main() {
+    int duration = 10; // duree max
+    countdown_timer(duration);
+    return 0;
+}
 
-    //countdown_timer(0);         valeur initiale du temps (implementation)
