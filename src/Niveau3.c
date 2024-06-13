@@ -5,33 +5,33 @@
 
 Case mapDifficile[Longueur3][Hauteur3];
 
-void initMap()
+void initMap(Case map[x][y], int longu, int haut)
 {
-    for (int x = 0; x < Longueur3; x++)
+    for (int i = 0; i < longu; i++)
     {
-        for (int y = 0; y < Hauteur3; y++)
+        for (int j = 0; j < haut; j++)
         {
-            mapDifficile[x][y].mine = 0;
-            mapDifficile[x][y].closestMine = 0;
-            mapDifficile[x][y].caseRevealed = 0;
+            map[i][j].mine = 0;
+            map[i][j].closestMine = 0;
+            map[i][j].caseRevealed = 0;
         }
     }
 }
 
 void afficheMap(int IsMine)
 {
-    for (int x = 0; x < Longueur3; x++)
+    for (int i = 0; i < Longueur3; i++)
     {
-        for (int y = 0; y < Hauteur3; y++)
+        for (int j = 0; j < Hauteur3; j++)
         {
-            if (mapDifficile[x][y].caseRevealed) {
-                if (mapDifficile[x][y].mine) {
+            if (mapDifficile[i][j].caseRevealed) {
+                if (mapDifficile[i][j].mine) {
                     printf("* ");
                 } else {
-                    printf("%d ", mapDifficile[x][y].closestMine);
+                    printf("%d ", mapDifficile[i][j].closestMine);
                 }
             } else {
-                if (IsMine && mapDifficile[x][y].mine) {
+                if (IsMine && mapDifficile[i][j].mine) {
                     printf("* ");
                 } else {
                     printf(". ");

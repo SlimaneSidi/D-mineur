@@ -47,10 +47,7 @@ int menuPrincipal(void) {
 
     switch (choix) {
         case 1:
-            while (menuJouer() != 2) {
-                menuJouer();
-                // Boucle du menu jouer, retourne au menu principal si l'option 2 est choisie
-            }
+            menuJouer();
             break;
         case 2:
             menuManuel();

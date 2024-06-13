@@ -7,31 +7,31 @@ Case mapMoyen[Longueur2][Hauteur2];
 
 void initMap()
 {
-    for (int x = 0; x < Longueur2; x++)
+    for (int i = 0; i < Longueur2; i++)
     {
-        for (int y = 0; y < Hauteur2; y++)
+        for (int j = 0; j < Hauteur2; j++)
         {
-            mapMoyen[x][y].mine = 0;
-            mapMoyen[x][y].closestMine = 0;
-            mapMoyen[x][y].caseRevealed = 0;
+            mapMoyen[i][j].mine = 0;
+            mapMoyen[i][j].closestMine = 0;
+            mapMoyen[i][j].caseRevealed = 0;
         }
     }
 }
 
 void afficheMap(int IsMine)
 {
-    for (int x = 0; x < Longueur2; x++)
+    for (int i = 0; i < Longueur2; i++)
     {
-        for (int y = 0; y < Hauteur2; y++)
+        for (int j = 0; j < Hauteur2; j++)
         {
-            if (mapMoyen[x][y].caseRevealed) {
-                if (mapMoyen[x][y].mine) {
+            if (mapMoyen[i][j].caseRevealed) {
+                if (mapMoyen[i][j].mine) {
                     printf("* ");
                 } else {
-                    printf("%d ", mapMoyen[x][y].closestMine);
+                    printf("%d ", mapMoyen[i][j].closestMine);
                 }
             } else {
-                if (IsMine && mapMoyen[x][y].mine) {
+                if (IsMine && mapMoyen[i][j].mine) {
                     printf("* ");
                 } else {
                     printf(". ");

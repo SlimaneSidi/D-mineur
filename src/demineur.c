@@ -12,7 +12,21 @@
 #define Timer 0
 
 int x, y;
-Case map1[Longueur1][Hauteur1];
+
+void initMap(Case map[x][y], int longu, int haut)
+{
+    for (int i = 0; i < longu; i++)
+    {
+        for (int j = 0; j < haut; j++)
+        {
+            map[i][j].mine = 0;
+            map[i][j].closestMine = 0;
+            map[i][j].caseRevealed = 0;
+        }
+    }
+
+    return map;
+}
 
 void JouerNiveau1()
 {
@@ -71,6 +85,12 @@ int main()
     menu();
 
     countdown_timer(Timer);
-    initMap();
+
+    if (choix == 1)
+    {
+        Case map1[Longueur1][Hauteur1];
+        initMap(map1[Longueur1][Hauteur1], Longueur1, Hauteur1);
+    }
+    
     //CalcClosestMine();
 }
