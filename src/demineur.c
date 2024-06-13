@@ -1,27 +1,21 @@
 #include <stdlib.h> // Pour pouvoir utiliser exit()
 #include <stdio.h> // Pour pouvoir utiliser printf()
 #include <math.h>
-#include "includes/Niveau1.h"
-#include "includes/Niveau2.h"
-#include "includes/Niveau3.h"
+#include "../includes/Niveau1.h"
+#include "../includes/genBombes.h"
+#include "../includes/menu.h"
+#include "../includes/time.h"
+#include "../includes/VIctoireDefaite.h"
 
 #define WindowLength largeurFenetre
 #define WindowHeight hauteurFenetre
 #define Timer 0
 
-
-int main()
-{
-    menu();
-
-    countdown_timer(Timer);
-    initMap();
-    CalcClosestMine();
-}
+int x, y;
+Case map1[Longueur1][Hauteur1];
 
 void JouerNiveau1()
 {
-    int x, y;
     printf("Entrez des coordonnées (x y): ");
     scanf("%d %d", &x, &y);
 
@@ -37,9 +31,8 @@ void JouerNiveau1()
     }
 }
 
-void JouerNiveau2()
+/*void JouerNiveau2()
 {
-    int x, y;
     printf("Entrez des coordonnées (x y): ");
     scanf("%d %d", &x, &y);
 
@@ -57,7 +50,6 @@ void JouerNiveau2()
 
 void JouerNiveau3()
 {
-    int x, y;
     printf("Entrez des coordonnées (x y): ");
     scanf("%d %d", &x, &y);
 
@@ -71,4 +63,14 @@ void JouerNiveau3()
     {
         afficheMap(0);
     }
+}*/
+
+
+int main()
+{
+    menu();
+
+    countdown_timer(Timer);
+    initMap();
+    //CalcClosestMine();
 }

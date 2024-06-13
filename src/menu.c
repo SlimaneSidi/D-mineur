@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h> // pour usleep()
+#include "../includes/menu.h"
 
 #define DELAI 1000000
 
@@ -47,6 +48,7 @@ int menuPrincipal(void) {
     switch (choix) {
         case 1:
             while (menuJouer() != 2) {
+                menuJouer();
                 // Boucle du menu jouer, retourne au menu principal si l'option 2 est choisie
             }
             break;

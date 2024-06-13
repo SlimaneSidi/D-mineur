@@ -1,26 +1,24 @@
-demineur : demineur.o genBombes.o menu.o Niveau1.o Niveau2.o Niveau3.o time.o
-	gcc -o main main.o fonc.o 
+CC := gcc
+CFLAGS := -Wall -O2 -o
 
-demineur.o : demineur.c
-	gcc -g -Wall -c demineur.c 
+BUILDDIR := ./build
+INCLUDE := ./include
+SRC := ./src
+SRCFILES := demineur.c genBombes.c menu.c Niveau1.c time.c
+OBJFILES := $(patsubst %.c, $(BUILDDIR)/%.o, $(SRCFILES))
 
-menu.o : menu.c
-	gcc -g -Wall -c menu.c 
+all: $(BUILDDIR) output
 
-genBombes.o : genBombes.c
-	gcc -g -Wall -c genBombes.c 
+$(BUILDDIR):
+	mkdir $(BUILDDIR)
 
-Niveau1.o : Niveau1.c
-	gcc -g -Wall -c Niveau1.c
+output: $(OBJFILES)
+	$(CC) $(CFLAGS) $@ $^ -lm 
 
-Niveau2.o : Niveau2.c
-	gcc -g -Wall -c Niveau2.c
+$(BUILDDIR)/%.o: $(SRC)/%.c
+	$(CC) $(CFLAGS) $@ -c $< -Wno-unused-result
 
-Niveau3.o : Niveau3.c
-	gcc -g -Wall -c Niveau3.c
-
-time.o : time.c
-	gcc -g -Wall -c time.c
-
-clean :
-	rm demineur *.o genBombes *.o menu *.o Niveau1 *.o Niveau2 *.o Niveau3 *.o time *.o
+clean:
+	rm -f $(BUILDDIR)/*.o
+	rm -fr $(BUILDDIR)
+	rm -f output

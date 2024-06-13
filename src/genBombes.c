@@ -1,7 +1,7 @@
 #include <stdlib.h> // Pour pouvoir utiliser exit()
 #include <stdio.h> // Pour pouvoir utiliser printf()
 #include <math.h>
-#include "includes/genBombes.h"
+#include "../includes/genBombes.h"
 
 void placeMines(int mines, int longueur, int hauteur, Case map[x][y]) 
 {
@@ -11,10 +11,10 @@ void placeMines(int mines, int longueur, int hauteur, Case map[x][y])
 
     while (placedMines < mines) 
     {
-        int x = rand() % longueur;
-        int y = rand() % hauteur;
-        if (!map[x][y].mine) {
-            map[x][y].mine = 1;
+        int i = rand() % longueur;
+        int j = rand() % hauteur;
+        if (!map[i][j].mine) {
+            map[i][j].mine = 1;
             placedMines++;
         }
     }
@@ -22,14 +22,14 @@ void placeMines(int mines, int longueur, int hauteur, Case map[x][y])
 
 void CalcClosestMine(int longueur, int hauteur, Case map[x][y]) 
 {
-    for (int x = 0; x < longueur; x++) {
-        for (int y = 0; y < hauteur; y++) {
-            if (map[x][y].mine) continue;
+    for (int i = 0; i < longueur; i++) {
+        for (int j = 0; j < hauteur; j++) {
+            if (map[i][j].mine) continue;
             int minesCount = 0;
-            for (int i = -1; i <= 1; i++) {
-                for (int j = -1; j <= 1; j++) {
-                    int newX = x + i;
-                    int newY = y + j;
+            for (int k = -1; k <= 1; k++) {
+                for (int l = -1; l <= 1; l++) {
+                    int newX = i + k;
+                    int newY = j + l;
                     if (newX >= 0 && newX < longueur && newY >= 0 && newY < hauteur) {
                         if (map[newX][newY].mine) {
                             minesCount++;
@@ -37,7 +37,7 @@ void CalcClosestMine(int longueur, int hauteur, Case map[x][y])
                     }
                 }
             }
-            map[x][y].closestMine = minesCount;
+            map[i][j].closestMine = minesCount;
         }
     }
 }

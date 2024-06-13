@@ -17,7 +17,7 @@ typedef struct {
     int caseRevealed;
 } Case;
 
-Case map1[Longueur1][Hauteur1];
+extern Case map1[Longueur1][Hauteur1];
 
 void initMap();
 
