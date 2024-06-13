@@ -23,6 +23,8 @@ int countdown_timer(int seconds) {
     return chrono;
 }
 
+
+////////////////////////////////////////
 int main() {
     int duration = 10; // duree max
     countdown_timer(duration);
