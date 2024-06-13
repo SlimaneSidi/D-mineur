@@ -8,7 +8,6 @@
 
 #define DELAI 1000000
 
-
 void effaceConsole(void);
 void attendre(double duree);
 int menuPrincipal(void);
