@@ -1,3 +1,4 @@
+int baisetesmorts; 
 #include <stdio.h>
 #include <time.h>
 
