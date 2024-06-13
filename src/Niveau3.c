@@ -1,19 +1,19 @@
 #include <stdlib.h> // Pour pouvoir utiliser exit()
 #include <stdio.h> // Pour pouvoir utiliser printf()
 #include <math.h>
-#include "../includes/Niveau3.h"
+#include "../include/Niveau3.h"
 
 Case mapDifficile[Longueur3][Hauteur3];
 
-void initMap(Case map[x][y], int longu, int haut)
+void initMap()
 {
-    for (int i = 0; i < longu; i++)
+    for (int i = 0; i < Longueur3; i++)
     {
-        for (int j = 0; j < haut; j++)
+        for (int j = 0; j < Hauteur3; j++)
         {
-            map[i][j].mine = 0;
-            map[i][j].closestMine = 0;
-            map[i][j].caseRevealed = 0;
+            mapDifficile[i][j].mine = 0;
+            mapDifficile[i][j].closestMine = 0;
+            mapDifficile[i][j].caseRevealed = 0;
         }
     }
 }
