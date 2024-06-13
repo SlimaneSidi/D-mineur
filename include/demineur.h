@@ -4,19 +4,18 @@
 #include <stdlib.h> // Pour pouvoir utiliser exit()
 #include <stdio.h> // Pour pouvoir utiliser printf()
 #include <math.h>
-#include "../includes/Niveau1.h"
-#include "../includes/Niveau2.h"
-#include "../includes/Niveau3.h"
-#include "../includes/genBombes.h"
-#include "../includes/menu.h"
-#include "../includes/time.h"
-#include "../includes/VictoireDefaite.h"
+#include "Niveau1.h"
+#include "Niveau2.h"
+#include "Niveau3.h"
+#include "genBombes.h"
+#include "menu.h"
+#include "time.h"
+#include "VictoireDefaite.h"
 
 #define WindowLength largeurFenetre
 #define WindowHeight hauteurFenetre
 #define Timer 0
 
-int x, y;
 int difficultyChoix;
 
 int nbChoix(int choix);
