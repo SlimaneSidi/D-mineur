@@ -1,5 +1,6 @@
 #include <stdlib.h> // Pour pouvoir utiliser exit()
 #include <stdio.h> // Pour pouvoir utiliser printf()
+#include "../include/victoireDefaite.h"
 
 void defaite() {
     printf("Vous avez cliqué sur une mine ! Vous avez explosé!\n");
