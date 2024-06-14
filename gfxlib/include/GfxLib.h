@@ -1,6 +1,9 @@
 // Veuillez reporter tout commentaire a ghislain.oudinet@yncrea.fr
 
 
+//	Version 3.3 (22/06/2022) : ajout du renvoi de l'ancienne épaisseur par epaisseurDeTrait()
+//								ajout du support du bouton du milieu ainsi que du scroll
+//
 //  Version 3.2 (16/09/2016) : remplacement de demandeAnimation_ips() par un demandeTemporisation() plus générique (qui envoie le message Temporisation)
 //		Ajout de la fonction termineBoucleEvenements(), necessaire dorenavant sous FreeGLUT sous Linux pour faire quelques nettoyages avant fin du programme
 //		Les actions sur le clavier ne memorisent plus les coordonnees de la souris (a moins de recompiler en activant ACTION_CLAVIER_MEMORISE_POSITION_SOURIS)
@@ -85,7 +88,7 @@
 
 typedef enum {Inactivite, Affichage, Clavier, ClavierSpecial, Souris, BoutonSouris, Initialisation, Redimensionnement, Temporisation}
 	EvenementGfx;
-typedef enum {GaucheAppuye, GaucheRelache, DroiteAppuye, DroiteRelache}
+typedef enum {GaucheAppuye, GaucheRelache, DroiteAppuye, DroiteRelache, MilieuAppuye, MilieuRelache, ScrollDown, ScrollUp, ScrollRight, ScrollLeft}
 	EtatBoutonSouris;
 typedef enum {SuiteDePoints, SuiteDeLignes, SuiteDeTriangles, SuiteDeRectangles, BandeDeTriangles, BandeDeRectangles}
 	PrimitiveGfxLib;
@@ -132,8 +135,9 @@ void effaceFenetre(int rouge, int vert, int bleu);
 	Les composantes rouge, vert et bleu s'etendent de 0 a 255 inclus */
 void couleurCourante(int rouge, int vert, int bleu);
 
-/* Definit l'epaisseur de trait EN PIXELS DE LA FENETRE servant a afficher les points et les lignes */
-void epaisseurDeTrait(float epaisseur);
+// Definit l'epaisseur de trait EN PIXELS DE LA FENETRE servant a afficher les points et les lignes
+// Renvoie la dernière épaisseur de trait utilisée
+float epaisseurDeTrait(float epaisseur);
 
 /* Dessine un point de couleur courante aux coordonnees donnees */
 void point(float x, float y);

@@ -8,7 +8,6 @@
 #include "Niveau2.h"
 #include "Niveau3.h"
 #include "genBombes.h"
-#include "menu.h"
 #include "time.h"
 #include "VictoireDefaite.h"
 
