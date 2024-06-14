@@ -4,8 +4,8 @@ CFLAGS := -Wall -O2 -o
 BUILDDIR := ./build
 INCLUDE := ./include
 SRC := ./src
-SRCFILES := demineur.c genBombes.c menu.c Niveau1.c time.c
-OBJFILES := $(patsubst %.c, $(BUILDDIR)/%.o, $(SRCFILES))
+SRCFILES := main.c gameloop.c gridhandler.c
+OBJFILES := $(patsubst %.c, $(BUILDDIR)/%.o, $(SRCFILES)) # changer les .c en .h
 
 all: $(BUILDDIR) output
 
@@ -19,6 +19,5 @@ $(BUILDDIR)/%.o: $(SRC)/%.c
 	$(CC) $(CFLAGS) $@ -c $< -Wno-unused-result
 
 clean:
-	rm -f $(BUILDDIR)/*.o
 	rm -fr $(BUILDDIR)
 	rm -f output
