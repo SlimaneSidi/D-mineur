@@ -23,5 +23,7 @@ void gestionEvent(void);
 
 void placeMines(int mines, int longueur, int hauteur);
 
+void closestMine(int longueur, int hauteur);
+
 
 #endif
