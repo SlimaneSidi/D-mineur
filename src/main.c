@@ -29,7 +29,8 @@ void gestionEvent(void)
     map[x][y].cellRevealed = 1;
 
     placeMines(NbMines1, Longueur1, Hauteur1);
-    closestMine(Longueur1, Hauteur1);
+    closestMines(Longueur1, Hauteur1);
+    revealAdjacentCells(x, y, Longueur1, Hauteur1);
 
     afficheTab();
 
@@ -51,8 +52,10 @@ void gestionEvent(void)
         }
         else 
         {
-            closestMine(Longueur1, Hauteur1);
+            closestMines(Longueur1, Hauteur1);
             map[x][y].cellRevealed = 1;
+            revealAdjacentCells(x, y, Longueur1, Hauteur1);
+
             afficheTab();
         }
     }
@@ -75,25 +78,44 @@ void placeMines(int mines, int longueur, int hauteur)
     }
 }
 
-void closestMine(int longueur, int hauteur) 
-{
+void closestMines(int longueur, int hauteur) {
     for (int i = 0; i < longueur; i++) {
         for (int j = 0; j < hauteur; j++) {
-            if (map[i][j].isMine) continue;
+
             int minesCount = 0;
             for (int k = -1; k <= 1; k++) {
                 for (int l = -1; l <= 1; l++) {
                     int newX = i + k;
                     int newY = j + l;
+
                     if (newX >= 0 && newX < longueur && newY >= 0 && newY < hauteur) {
                         if (map[newX][newY].isMine) {
                             minesCount++;
-                            map[newX+1][newY+1].closestMine = minesCount;
                         }
                     }
                 }
             }
+
             map[i][j].closestMine = minesCount;
+        }
+    }
+}
+
+
+void revealAdjacentCells(int x, int y, int longueur, int hauteur) {
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            int newX = x + i;
+            int newY = y + j;
+
+            if (newX >= 0 && newX < longueur && newY >= 0 && newY < hauteur) {
+                if (!map[newX][newY].cellRevealed && !map[newX][newY].isMine) {
+                    map[newX][newY].cellRevealed = 1;
+                    //if (map[newX][newY].closestMine == 0) {
+                    //    revealAdjacentCells(newX, newY, longueur, hauteur);
+                    //}
+                }
+            }
         }
     }
 }
