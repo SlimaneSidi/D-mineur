@@ -31,6 +31,7 @@ void gestionEvent(void)
     placeMines(NbMines1, Longueur1, Hauteur1);
     closestMines(Longueur1, Hauteur1);
     revealAdjacentCells(x, y, Longueur1, Hauteur1);
+    void displayAdjacentEmptyCells(int x, int y, int longueur, int hauteur);
 
     afficheTab();
 
@@ -55,6 +56,7 @@ void gestionEvent(void)
             closestMines(Longueur1, Hauteur1);
             map[x][y].cellRevealed = 1;
             revealAdjacentCells(x, y, Longueur1, Hauteur1);
+            void displayAdjacentEmptyCells(int x, int y, int longueur, int hauteur);
 
             afficheTab();
         }
@@ -111,9 +113,27 @@ void revealAdjacentCells(int x, int y, int longueur, int hauteur) {
             if (newX >= 0 && newX < longueur && newY >= 0 && newY < hauteur) {
                 if (!map[newX][newY].cellRevealed && !map[newX][newY].isMine) {
                     map[newX][newY].cellRevealed = 1;
-                    //if (map[newX][newY].closestMine == 0) {
-                    //    revealAdjacentCells(newX, newY, longueur, hauteur);
-                    //}
+                }
+            }
+        }
+    }
+}
+
+void displayAdjacentEmptyCells(int x, int y, int longueur, int hauteur) {
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            int newX = x + i;
+            int newY = y + j;
+
+            if (map[newX][newY].closestMine == 0) {
+                revealAdjacentCells(newX, newY, longueur, hauteur);
+            }
+
+            if (newX >= 0 && newX < longueur && newY >= 0 && newY < hauteur) {
+                if (!map[newX][newY].cellRevealed && !map[newX][newY].isMine && map[newX][newY].closestMine == 0) {
+                    map[newX][newY].cellRevealed = 1;
+                    map[newX][newY].closestMine = 0;
+                    displayAdjacentEmptyCells(newX, newY, longueur, hauteur);
                 }
             }
         }

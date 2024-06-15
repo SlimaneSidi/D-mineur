@@ -27,5 +27,7 @@ void closestMines(int longueur, int hauteur);
 
 void revealAdjacentCells(int x, int y, int longueur, int hauteur);
 
+void displayAdjacentEmptyCells(int x, int y, int longueur, int hauteur);
+
 
 #endif
