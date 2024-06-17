@@ -31,7 +31,9 @@ void gestionEvent(void)
     placeMines(NbMines1, Longueur1, Hauteur1);
     closestMines(Longueur1, Hauteur1);
     revealAdjacentCells(x, y, Longueur1, Hauteur1);
-    void displayAdjacentEmptyCells(int x, int y, int longueur, int hauteur);
+    trouveZoneVide(x, y, map);
+
+
 
     afficheTab();
 
@@ -56,7 +58,7 @@ void gestionEvent(void)
             closestMines(Longueur1, Hauteur1);
             map[x][y].cellRevealed = 1;
             revealAdjacentCells(x, y, Longueur1, Hauteur1);
-            void displayAdjacentEmptyCells(int x, int y, int longueur, int hauteur);
+            trouveZoneVide(x, y, map);
 
             afficheTab();
         }
@@ -119,25 +121,21 @@ void revealAdjacentCells(int x, int y, int longueur, int hauteur) {
     }
 }
 
-void displayAdjacentEmptyCells(int x, int y, int longueur, int hauteur) {
-    for (int i = -1; i <= 1; i++) {
-        for (int j = -1; j <= 1; j++) {
-            int newX = x + i;
-            int newY = y + j;
+void trouveZoneVide(int longueur, int hauteur, cell map[][longueur]){
 
-            if (map[newX][newY].closestMine == 0) {
-                revealAdjacentCells(newX, newY, longueur, hauteur);
-            }
+  if (longueur < 0 || longueur >= Longueur1 || hauteur < 0 || hauteur >= Hauteur1 || map[longueur][hauteur].cellRevealed || map[longueur][hauteur].isMine) return;
+  map[longueur][hauteur].cellRevealed = 1;
 
-            if (newX >= 0 && newX < longueur && newY >= 0 && newY < hauteur) {
-                if (!map[newX][newY].cellRevealed && !map[newX][newY].isMine && map[newX][newY].closestMine == 0) {
-                    map[newX][newY].cellRevealed = 1;
-                    map[newX][newY].closestMine = 0;
-                    displayAdjacentEmptyCells(newX, newY, longueur, hauteur);
-                }
-            }
+  if (map[longueur][hauteur].closestMine == 0){
+    for (int x = -1; x <= 1; x++){
+      for (int y = -1; y <= 1; y++){
+        int temp_i = longueur + x;
+        int temp_j = hauteur + y;
+
+        if (temp_i >= 0 && temp_i < Longueur1 && temp_j >= 0 && temp_j < Hauteur1 && !map[temp_i][temp_j].cellRevealed && !map[temp_i][temp_j].isMine){
+          trouveZoneVide(temp_i, temp_j, map);
         }
+      }
     }
+  }
 }
-
-
