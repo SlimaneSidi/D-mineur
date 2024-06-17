@@ -1,24 +1,36 @@
 #ifndef DEMINEUR_H
 #define DEMINEUR_H
 
-#include <stdlib.h> // Pour pouvoir utiliser exit()
-#include <stdio.h> // Pour pouvoir utiliser printf()
-#include <math.h>
-#include "Niveau1.h"
-#include "Niveau2.h"
-#include "Niveau3.h"
-#include "genBombes.h"
-#include "time.h"
-#include "VictoireDefaite.h"
+#include "../gfxlib/include/GfxLib.h"
+#include "../gfxlib/include/BmpLib.h"
 
-#define WindowLength largeurFenetre
-#define WindowHeight hauteurFenetre
-#define Timer 0
+#define LARGEUR 10
+#define HAUTEUR 15
+#define TAILLE_CASE 40
+#define NB_IMAGES 11  // 8 chiffres, 1 drapeau, 1 mine, 1 case vide
 
-int difficultyChoix;
+typedef struct {
+    bool estMine;
+    bool estRevelee;
+    bool estMarquee;
+} Case;
 
-int nbChoix(int choix);
-void initMap(Case map[x][y], int longu, int haut);
-void JouerNiveau();
+typedef struct {
+    int largeur;
+    int longueur;
+    Case *cases;
+} Grille;
+
+extern DonneesImageRGB *images[NB_IMAGES];
+
+void gestionEvenement(EvenementGfx evenement);
+void initialiseGrille(Grille *grille);
+void dessineGrille(const Grille *grille);
+void chargeImages(void);
+void libereImages(void);
+void reveleCase(Grille *grille, int x, int y);
+void marqueDrapeau(Grille *grille, int x, int y);
+int compterMinesAdjacentes(Grille *grille, int x, int y);
 
 #endif
+
