@@ -27,7 +27,7 @@ void closestMines(int longueur, int hauteur);
 
 void revealAdjacentCells(int x, int y, int longueur, int hauteur);
 
-void trouveZoneVide(int longueur, int hauteur, cell map[][longueur]);
+void trouveZoneVide(int ligne, int colonne, cell map[][Hauteur1]);
 
 //void displayAdjacentEmptyCells(int x, int y, int longueur, int hauteur);
 

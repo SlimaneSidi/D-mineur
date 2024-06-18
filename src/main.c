@@ -121,21 +121,22 @@ void revealAdjacentCells(int x, int y, int longueur, int hauteur) {
     }
 }
 
-void trouveZoneVide(int longueur, int hauteur, cell map[][longueur]){
+void trouveZoneVide(int ligne, int colonne, cell map[][Hauteur1]) {
+    if (ligne < 0 || ligne >= Longueur1 || colonne < 0 || colonne >= Hauteur1 || map[ligne][colonne].cellRevealed || map[ligne][colonne].isMine)
+        return;
 
-  if (longueur < 0 || longueur >= Longueur1 || hauteur < 0 || hauteur >= Hauteur1 || map[longueur][hauteur].cellRevealed || map[longueur][hauteur].isMine) return;
-  map[longueur][hauteur].cellRevealed = 1;
+    map[ligne][colonne].cellRevealed = 1;
 
-  if (map[longueur][hauteur].closestMine == 0){
-    for (int x = -1; x <= 1; x++){
-      for (int y = -1; y <= 1; y++){
-        int temp_i = longueur + x;
-        int temp_j = hauteur + y;
+    if (map[ligne][colonne].closestMine == 0) {
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                int temp_i = ligne + x;
+                int temp_j = colonne + y;
 
-        if (temp_i >= 0 && temp_i < Longueur1 && temp_j >= 0 && temp_j < Hauteur1 && !map[temp_i][temp_j].cellRevealed && !map[temp_i][temp_j].isMine){
-          trouveZoneVide(temp_i, temp_j, map);
+                if (temp_i >= 0 && temp_i < Longueur1 && temp_j >= 0 && temp_j < Hauteur1 && !map[temp_i][temp_j].cellRevealed && !map[temp_i][temp_j].isMine) {
+                    trouveZoneVide(temp_i, temp_j, map);
+                }
+            }
         }
-      }
     }
-  }
 }
