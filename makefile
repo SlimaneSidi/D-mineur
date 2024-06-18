@@ -16,7 +16,7 @@ libisentlib.a:
 	make -C gfxlib/
 
 exec: $(OBJFILES)
-	$(CC) $(CFLAGS) $@ $^ gfxlib/build/libisentlib.a -lm -lglut -lGL -pthread 
+	$(CC) $(CFLAGS) $@ $^ gfxlib/build/libisentlib.a -lX11 -lm -lglut -lGL -pthread 
 
 $(BUILDDIR)/%.o: $(SRC)/%.c
 	$(CC) $(CFLAGS) $@ -c $< -Wno-unused-result
