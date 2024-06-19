@@ -26,16 +26,22 @@ void gestionEvent(void)
     printf("Entrez les coordonnées de départ (x y): ");
     scanf("%d %d", &x, &y);
 
+    rocknigg(x, y, x, y, map);
+
     map[x][y].cellRevealed = 1;
 
     placeMines(NbMines1, Longueur1, Hauteur1);
     closestMines(Longueur1, Hauteur1);
     revealAdjacentCells(x, y, Longueur1, Hauteur1);
-    trouveZoneVide(x, y, map);
+   
 
 
 
     afficheTab();
+
+    printf("\n");
+    printf("----------- Map debug : -----------\n");
+    printf("\n");
 
     afficheMapComplete();
 
@@ -45,6 +51,7 @@ void gestionEvent(void)
     {
         printf("Entrez les coordonnées suivantes (x y): ");
         scanf("%d %d", &x, &y);
+        printf("\n");
 
         if (map[x][y].isMine == 1)
         {
@@ -57,10 +64,10 @@ void gestionEvent(void)
         }
         else 
         {
+            rocknigg(x, y, x, y, map); //connard
             closestMines(Longueur1, Hauteur1);
             map[x][y].cellRevealed = 1;
             revealAdjacentCells(x, y, Longueur1, Hauteur1);
-            trouveZoneVide(x, y, map);
 
             afficheTab();
         }
@@ -123,8 +130,8 @@ void revealAdjacentCells(int x, int y, int longueur, int hauteur) {
     }
 }
 
-void trouveZoneVide(int ligne, int colonne, cell map[][Longueur1]) {
-    if (ligne < 0 || ligne >= Hauteur1 || colonne < 0 || colonne >= Longueur1 || map[ligne][colonne].cellRevealed || map[ligne][colonne].isMine)
+void rocknigg(int x, int y, int ligne, int colonne, cell map[][Longueur1]) {
+    if (ligne == x || colonne == y || ligne < 0 || ligne >= Hauteur1 || colonne < 0 || colonne >= Longueur1 || map[ligne][colonne].cellRevealed || map[ligne][colonne].isMine)
         return;
 
     map[ligne][colonne].cellRevealed = 1;
@@ -136,12 +143,13 @@ void trouveZoneVide(int ligne, int colonne, cell map[][Longueur1]) {
                 int temp_j = colonne + y;
 
                 if (temp_i >= 0 && temp_i < Hauteur1 && temp_j >= 0 && temp_j < Longueur1 && !map[temp_i][temp_j].cellRevealed && !map[temp_i][temp_j].isMine) {
-                    trouveZoneVide(temp_i, temp_j, map);
+                    rocknigg(x, y, temp_i, temp_j, map);
                 }
             }
         }
     }
 }
+ 
 
 void afficheMapComplete(void) {
     for (int i = 0; i < Hauteur1; i++) {
