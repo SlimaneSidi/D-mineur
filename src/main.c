@@ -37,6 +37,8 @@ void gestionEvent(void)
 
     afficheTab();
 
+    afficheMapComplete();
+
     int GAME = 0;
 
     while (GAME == 0)
@@ -121,8 +123,8 @@ void revealAdjacentCells(int x, int y, int longueur, int hauteur) {
     }
 }
 
-void trouveZoneVide(int ligne, int colonne, cell map[][Hauteur1]) {
-    if (ligne < 0 || ligne >= Longueur1 || colonne < 0 || colonne >= Hauteur1 || map[ligne][colonne].cellRevealed || map[ligne][colonne].isMine)
+void trouveZoneVide(int ligne, int colonne, cell map[][Longueur1]) {
+    if (ligne < 0 || ligne >= Hauteur1 || colonne < 0 || colonne >= Longueur1 || map[ligne][colonne].cellRevealed || map[ligne][colonne].isMine)
         return;
 
     map[ligne][colonne].cellRevealed = 1;
@@ -133,10 +135,20 @@ void trouveZoneVide(int ligne, int colonne, cell map[][Hauteur1]) {
                 int temp_i = ligne + x;
                 int temp_j = colonne + y;
 
-                if (temp_i >= 0 && temp_i < Longueur1 && temp_j >= 0 && temp_j < Hauteur1 && !map[temp_i][temp_j].cellRevealed && !map[temp_i][temp_j].isMine) {
+                if (temp_i >= 0 && temp_i < Hauteur1 && temp_j >= 0 && temp_j < Longueur1 && !map[temp_i][temp_j].cellRevealed && !map[temp_i][temp_j].isMine) {
                     trouveZoneVide(temp_i, temp_j, map);
                 }
             }
         }
     }
 }
+
+void afficheMapComplete(void) {
+    for (int i = 0; i < Hauteur1; i++) {
+        for (int j = 0; j < Longueur1; j++) {
+            map[i][j].cellRevealed = 1;
+        }
+    }
+    afficheTab();
+}
+

@@ -7,7 +7,7 @@ SRC := ./src
 SRCFILES := main.c gameloop.c gridhandler.c
 OBJFILES := $(patsubst %.c, $(BUILDDIR)/%.o, $(SRCFILES)) # changer les .c en .h
 
-all: $(BUILDDIR) libisentlib.a output
+all: $(BUILDDIR) libisentlib.a exec
 
 $(BUILDDIR):
 	mkdir $(BUILDDIR)
@@ -15,7 +15,7 @@ $(BUILDDIR):
 libisentlib.a:
 	make -C gfxlib/
 
-output: $(OBJFILES)
+exec: $(OBJFILES)
 	$(CC) $(CFLAGS) $@ $^ gfxlib/build/libisentlib.a -lm -lglut -lGL -pthread 
 
 $(BUILDDIR)/%.o: $(SRC)/%.c
@@ -25,4 +25,4 @@ clean:
 	make clean -C gfxlib/
 	rm -f $(BUILDDIR)/*.o
 	rm -fr $(BUILDDIR)
-	rm -f output
+	rm -f exec

@@ -29,6 +29,8 @@ void revealAdjacentCells(int x, int y, int longueur, int hauteur);
 
 void trouveZoneVide(int ligne, int colonne, cell map[][Hauteur1]);
 
+void afficheMapComplete(void);
+
 //void displayAdjacentEmptyCells(int x, int y, int longueur, int hauteur);
 
 #endif
