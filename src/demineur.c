@@ -152,7 +152,7 @@ void reveleCase(Grille *grille, int x, int y) {
         if (!c->estRevelee && !c->estMarquee) {
             c->estRevelee = true;
             if (c->estMine) {
-                // Logique pour gérer la fin du jeu
+                // Logique fin du jeu
             } else {
                 int adjacentMines = compterMinesAdjacentes(grille, x, y);
                 if (adjacentMines == 0) {
