@@ -26,15 +26,13 @@ void gestionEvent(void)
     printf("Entrez les coordonnées de départ (x y): ");
     scanf("%d %d", &x, &y);
 
-    rocknigg(x, y, x, y, map);
-
     map[x][y].cellRevealed = 1;
 
     placeMines(NbMines1, Longueur1, Hauteur1);
     closestMines(Longueur1, Hauteur1);
-    revealAdjacentCells(x, y, Longueur1, Hauteur1);
-   
-
+    //revealAdjacentCells(x, y, Longueur1, Hauteur1);
+    
+    rocknigg(x, y, map);
 
 
     afficheTab();
@@ -64,10 +62,10 @@ void gestionEvent(void)
         }
         else 
         {
-            rocknigg(x, y, x, y, map); //connard
-            closestMines(Longueur1, Hauteur1);
-            map[x][y].cellRevealed = 1;
-            revealAdjacentCells(x, y, Longueur1, Hauteur1);
+            rocknigg(x, y, map); //connard
+            //closestMines(Longueur1, Hauteur1);
+            //map[x][y].cellRevealed = 1;
+            //revealAdjacentCells(x, y, Longueur1, Hauteur1);
 
             afficheTab();
         }
@@ -84,9 +82,9 @@ void placeMines(int mines, int longueur, int hauteur)
     {
         int i = rand() % longueur;
         int j = rand() % hauteur;
-        if (!map[i][j].isMine) {
+        if (map[i][j].isMine == 0 && map[i][j].cellRevealed == 0) {
             map[i][j].isMine = 1;
-            placedMines++;
+            placedMines+=1;
         }
     }
 }
@@ -130,9 +128,7 @@ void revealAdjacentCells(int x, int y, int longueur, int hauteur) {
     }
 }
 
-void rocknigg(int x, int y, int ligne, int colonne, cell map[][Longueur1]) {
-    if (ligne == x || colonne == y || ligne < 0 || ligne >= Hauteur1 || colonne < 0 || colonne >= Longueur1 || map[ligne][colonne].cellRevealed || map[ligne][colonne].isMine)
-        return;
+void rocknigg(int ligne, int colonne, cell map[][Longueur1]) {
 
     map[ligne][colonne].cellRevealed = 1;
 
@@ -142,8 +138,14 @@ void rocknigg(int x, int y, int ligne, int colonne, cell map[][Longueur1]) {
                 int temp_i = ligne + x;
                 int temp_j = colonne + y;
 
-                if (temp_i >= 0 && temp_i < Hauteur1 && temp_j >= 0 && temp_j < Longueur1 && !map[temp_i][temp_j].cellRevealed && !map[temp_i][temp_j].isMine) {
-                    rocknigg(x, y, temp_i, temp_j, map);
+                if(temp_i < 0 || temp_i >= Hauteur1 || temp_j < 0 || temp_j >= Longueur1) continue;
+                if(map[temp_i][temp_j].isMine >= 1 || map[temp_i][temp_j].cellRevealed >= 1) continue;
+
+                map[ligne][colonne].cellRevealed = 1;
+
+                if(map[temp_i][temp_j].isMine == 0){
+                    rocknigg(temp_i, temp_j, map);
+                    //printf("Youpi");
                 }
             }
         }

@@ -27,7 +27,7 @@ void closestMines(int longueur, int hauteur);
 
 void revealAdjacentCells(int x, int y, int longueur, int hauteur);
 
-void rocknigg(int x, int y, int ligne, int colonne, cell map[][Longueur1]);
+void rocknigg(int ligne, int colonne, cell map[][Longueur1]);
 
 void afficheMapComplete(void);
 
