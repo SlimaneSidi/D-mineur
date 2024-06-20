@@ -1,96 +1,164 @@
-#include "../include/main.h" 
-#include "../../gfxlib/include/GfxLib.h" 
-#include <GL/glut.h> // glutKeyboardUpFunc / glutget / GLUT_ELAPSED_TIME
-#include "../include/ui.h"
-#include "../include/outils.h"
-#include "../include/opacite.h"
-#include "../include/struct.h"
-#include "stdlib.h"
-#include "string.h"
-#include "stdio.h"
-#include "pthread.h"
-#include <stdbool.h>
-#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
-
-//////////////////////////////  VARIABLES GLOBALES ///////////////////////////////////////////////
-
-int screenHeight = 640; // Hauteur de la fenêtre
-int screenWidth = 960; // Largeur de la fenêtre
-static KeysStruct Keys = {0,0,0,0}; // Structure conservant l'état des touches
-//static char Music[] = {"a-remplir.mp3"};
+#include <time.h>
+#include "../include/main.h"
 
 
-static int gameState = 0;
+cell map[Longueur1][Hauteur1];
 
-static int score= 0;
-static int level = 1;
 
-DonneesImageRGB *image = NULL; //////
-int *pixels = NULL;
-Texture2D *texture = NULL;
+int main(void)
+{
+    initTab(Longueur1, Hauteur1);
 
-void ui() {
-   
+    gestionEvent();
 
-        bomb = lisBMPRGB("image/bomb.bmp");
-        pixels = BVR2ARVB1(image->largeurImage, image->hauteurImage, image->donneesRGB);
-        texture = creeTexture2D(image->largeurImage, image->hauteurImage, pixels);
-        rectangleSelonTexture((screenWidth / 2) - 32, screenHeight / 8, texture);
+    return 0;
+}
 
+void gestionEvent(void)
+{
+    int x, y;
+
+    afficheTab();
+
+    printf("Entrez les coordonnées de départ (x y): ");
+    scanf("%d %d", &x, &y);
+
+    map[x][y].cellRevealed = 1;
+
+    placeMines(NbMines1, Longueur1, Hauteur1);
+    closestMines(Longueur1, Hauteur1);
+    //revealAdjacentCells(x, y, Longueur1, Hauteur1);
     
-   
-        flag = lisBMPRGB("image/flag.bmp");
-        pixels = BVR2ARVB1(image->largeurImage, image->hauteurImage, image->donneesRGB);
-        texture = creeTexture2D(image->largeurImage, image->hauteurImage, pixels);
-        rectangleSelonTexture((screenWidth / 2) - 32, screenHeight / 8, texture);
+    zonesVides(x, y, map);
 
-    
 
-    
-        interogation = lisBMPRGB("image/interogation.bmp");
-        pixels = BVR2ARVB1(image->largeurImage, image->hauteurImage, image->donneesRGB);
-        texture = creeTexture2D(image->largeurImage, image->hauteurImage, pixels);
-        rectangleSelonTexture((screenWidth / 2) - 32, screenHeight / 8, texture);
+    afficheTab();
 
-      newHUD();
+    printf("\n");
+    printf("----------- Map debug : -----------\n");
+    printf("\n");
+
+    afficheMapComplete();
+
+    int GAME = 0;
+
+    while (GAME == 0)
+    {
+        printf("Entrez les coordonnées suivantes (x y): ");
+        scanf("%d %d", &x, &y);
+        printf("\n");
+
+        if (map[x][y].isMine == 1)
+        {
+            printf("Vous avez touché une mine...\n la partie est terminée.\n");
+            return;
+        }
+        else if (x == 98 || y == 98)
+        {
+            GAME = 1;
+        }
+        else 
+        {
+            zonesVides(x, y, map); //connard
+            //closestMines(Longueur1, Hauteur1);
+            //map[x][y].cellRevealed = 1;
+            //revealAdjacentCells(x, y, Longueur1, Hauteur1);
+
+            afficheTab();
+        }
+    }
+}
+
+void placeMines(int mines, int longueur, int hauteur) 
+{
+    srand(time(NULL));
+
+    int placedMines = 0;
+
+    while (placedMines < mines) 
+    {
+        int i = rand() % longueur;
+        int j = rand() % hauteur;
+        if (map[i][j].isMine == 0 && map[i][j].cellRevealed == 0) {
+            map[i][j].isMine = 1;
+            placedMines+=1;
+        }
+    }
+}
+
+void closestMines(int longueur, int hauteur) {
+    for (int i = 0; i < longueur; i++) {
+        for (int j = 0; j < hauteur; j++) {
+
+            int minesCount = 0;
+            for (int k = -1; k <= 1; k++) {
+                for (int l = -1; l <= 1; l++) {
+                    int newX = i + k;
+                    int newY = j + l;
+
+                    if (newX >= 0 && newX < longueur && newY >= 0 && newY < hauteur) {
+                        if (map[newX][newY].isMine) {
+                            minesCount++;
+                        }
+                    }
+                }
+            }
+
+            map[i][j].closestMine = minesCount;
+        }
+    }
 }
 
 
+void revealAdjacentCells(int x, int y, int longueur, int hauteur) {
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            int newX = x + i;
+            int newY = y + j;
 
-
-void newHUD() {
-    char buffer[7] = {0};
-    couleurCourante(100, 100, 100);
-    rectangle(0, 0, screenWidth, screenHeight * 0.07);
-    couleurCourante(0, 0, 128);
-
-    rectangle(2, 0, screenWidth / 9 - 2, screenHeight * 0.07);
-
-    rectangle(screenWidth / 9 + 2, 0, screenWidth / 3 - 2, screenHeight * 0.07);
-
-    rectangle(screenWidth / 3 + 2, 0, 4 * screenWidth / 9 - 2, screenHeight * 0.07);
-
-    rectangle(4 * screenWidth / 9 + 2, 0, 5 * screenWidth / 9 - 2, screenHeight * 0.07);
-
-    rectangle(5 * screenWidth / 9 + 2, 0, 6 * screenWidth / 9 - 2, screenHeight * 0.07);
-
-    rectangle(6 * screenWidth / 9 + 2, 0, 7 * screenWidth / 9 - 2, screenHeight * 0.07);
-
-    rectangle(7 * screenWidth / 9 + 2, 0, screenWidth - 2, screenHeight * 0.07);
-
-    // ecriture :
-    couleurCourante(255, 255, 255);
-    epaisseurDeTrait(3);
-   
-    afficheChaine("SCORE :", 20, screenWidth / 9 + 4, screenHeight * 0.045);
-    sprintf(buffer, "%d", score);
-    afficheChaine(buffer, 30, screenWidth / 6, screenHeight * 0.02);
-
+            if (newX >= 0 && newX < longueur && newY >= 0 && newY < hauteur) {
+                if (!map[newX][newY].cellRevealed && !map[newX][newY].isMine) {
+                    map[newX][newY].cellRevealed = 1;
+                }
+            }
+        }
+    }
 }
 
-void *loopThread(void *arg) {
-    lanceBoucleEvenements();
+void zonesVides(int ligne, int colonne, cell map[][Hauteur1]) {
 
-    return NULL;
+    map[ligne][colonne].cellRevealed = 1;
+
+    if (map[ligne][colonne].closestMine == 0) {
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                int temp_i = ligne + x;
+                int temp_j = colonne + y;
+
+                if(temp_i < 0 || temp_i >= Hauteur1 || temp_j < 0 || temp_j >= Longueur1) continue;
+                if(map[temp_i][temp_j].isMine >= 1 || map[temp_i][temp_j].cellRevealed >= 1) continue;
+
+                map[ligne][colonne].cellRevealed = 1;
+
+                if(map[temp_i][temp_j].isMine == 0){
+                    zonesVides(temp_i, temp_j, map);
+                    //printf("Youpi");
+                }
+            }
+        }
+    }
 }
+ 
+
+void afficheMapComplete(void) {
+    for (int i = 0; i < Hauteur1; i++) {
+        for (int j = 0; j < Longueur1; j++) {
+            map[i][j].cellRevealed = 1;
+        }
+    }
+    afficheTab();
+}
+

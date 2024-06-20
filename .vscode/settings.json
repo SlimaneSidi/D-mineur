@@ -1,9 +1,5 @@
 {
     "files.associations": {
-        "eslib.h": "c",
-        "bmplib.h": "c",
-        "niveau1.h": "c",
-        "niveau3.h": "c",
-        "time.h": "c"
+        "main.h": "c"
     }
 }
