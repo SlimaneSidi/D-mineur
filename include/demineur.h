@@ -21,11 +21,9 @@ typedef struct {
 
 typedef struct {
     int largeur;
-    int longueur;
+    int hauteur;
     cell *cases;
 } Grille;
-
-extern DonneesImageRGB *images[NB_IMAGES];
 
 void gestionEvenement(EvenementGfx evenement);
 void initialiseGrille(Grille *grille);
