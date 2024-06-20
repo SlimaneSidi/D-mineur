@@ -82,28 +82,29 @@ void dessineJeu(Grille *grille) {
     dessineGrille(grille);
 }
 
-// void dessineGrille(Grille *grille) {
-//     int largeur_grille = (LARGEUR_FENETRE * 9 / 10) - (LARGEUR_FENETRE / 4);
-//     int hauteur_grille = (HAUTEUR_FENETRE * 9 / 10) - (HAUTEUR_FENETRE / 6);
+ void dessineGrille(Grille *grille) {
+     int largeur_grille = (LARGEUR_FENETRE * 9 / 10) - (LARGEUR_FENETRE / 4);
+    int hauteur_grille = (HAUTEUR_FENETRE * 9 / 10) - (HAUTEUR_FENETRE / 6);
 
-//     for (int y = 0; y < grille->longueur; y++) {
-//         for (int x = 0; x < grille->largeur; x++) {
-//             int posX = x * (largeur_grille / LARGEUR_TABLEAU) + LARGEUR_FENETRE / 4;
-//             int posY = y * (hauteur_grille / HAUTEUR_TABLEAU) + HAUTEUR_FENETRE / 6;
-//             int index = 11;  // Index par défaut pour une case non révélée
-//             if (grille->cases[y * grille->largeur + x].estRevelee) {
-//                 index = grille->cases[y * grille->largeur + x].estMine ? 10 : grille->cases[y * grille->largeur + x].nbMines;
-//                 if (index > 4) index = 11; // S'assurer que l'index reste valide
-//             } else if (grille->cases[y * grille->largeur + x].estMarquee) {
-//                 index = 9;  // Index pour le drapeau
-//             }
-//             ecrisImage(posX, posY, images[index]->largeurImage, images[index]->hauteurImage, images[index]->donneesRGB);
-//         }
-//     }
-// }
+     for (int y = 0; y < grille->longueur; y++) {
+         for (int x = 0; x < grille->largeur; x++) {
+            int posX = x * (largeur_grille / LARGEUR_TABLEAU) + LARGEUR_FENETRE / 4;
+             int posY = y * (hauteur_grille / HAUTEUR_TABLEAU) + HAUTEUR_FENETRE / 6;
+            int index = 11;  // Index par défaut pour une case non révélée
+            if (grille->cases[y * grille->largeur + x].estRevelee) {
+                 index = grille->cases[y * grille->largeur + x].estMine ? 10 : grille->cases[y * grille->largeur + x].nbMines;
+                if (index > 4) index = 11; // S'assurer que l'index reste valide
+            } else if (grille->cases[y * grille->largeur + x].estMarquee) {
+                index = 9;  // Index pour le drapeau
+           }
+            ecrisImage(posX, posY, images[index]->largeurImage, images[index]->hauteurImage, images[index]->donneesRGB);
+        }
+     }
+ }
 
 
-// void dessineGri
+// void dessineGrille(Grille *grille){
+
 
 
 
