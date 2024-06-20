@@ -144,7 +144,7 @@ void zonesVides(int ligne, int colonne, cell map[][Hauteur1]) {
                 map[ligne][colonne].cellRevealed = 1;
 
                 if(map[temp_i][temp_j].isMine == 0){
-                    rocknigg(temp_i, temp_j, map);
+                    zonesVides(temp_i, temp_j, map);
                     //printf("Youpi");
                 }
             }
