@@ -6,8 +6,8 @@
 #include <math.h>
 #include "gridhandler.h"
 
-#define Longueur1 15
-#define Hauteur1 10
+#define Longueur1 10
+#define Hauteur1 15
 #define NbMines1 18
 
 typedef struct
@@ -17,7 +17,7 @@ typedef struct
     int cellRevealed;
 } cell;
 
-extern cell map[Hauteur1][Longueur1];
+extern cell map[Longueur1][Hauteur1];
 
 void gestionEvent(void);
 
@@ -27,7 +27,7 @@ void closestMines(int longueur, int hauteur);
 
 void revealAdjacentCells(int x, int y, int longueur, int hauteur);
 
-void rocknigg(int ligne, int colonne, cell map[][Longueur1]);
+void zonesVides(int ligne, int colonne, cell map[][Hauteur1]);
 
 void afficheMapComplete(void);
 

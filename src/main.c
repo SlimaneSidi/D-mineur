@@ -5,7 +5,7 @@
 #include "../include/main.h"
 
 
-cell map[Hauteur1][Longueur1];
+cell map[Longueur1][Hauteur1];
 
 
 int main(void)
@@ -32,7 +32,7 @@ void gestionEvent(void)
     closestMines(Longueur1, Hauteur1);
     //revealAdjacentCells(x, y, Longueur1, Hauteur1);
     
-    rocknigg(x, y, map);
+    zonesVides(x, y, map);
 
 
     afficheTab();
@@ -62,7 +62,7 @@ void gestionEvent(void)
         }
         else 
         {
-            rocknigg(x, y, map); //connard
+            zonesVides(x, y, map); //connard
             //closestMines(Longueur1, Hauteur1);
             //map[x][y].cellRevealed = 1;
             //revealAdjacentCells(x, y, Longueur1, Hauteur1);
@@ -128,7 +128,7 @@ void revealAdjacentCells(int x, int y, int longueur, int hauteur) {
     }
 }
 
-void rocknigg(int ligne, int colonne, cell map[][Longueur1]) {
+void zonesVides(int ligne, int colonne, cell map[][Hauteur1]) {
 
     map[ligne][colonne].cellRevealed = 1;
 
