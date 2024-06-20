@@ -13,15 +13,16 @@
 #define NB_IMAGES 12  // 8 chiffres, 1 drapeau, 1 mine, 1 case vide
 
 typedef struct {
-    bool estMine;
     bool estRevelee;
+    bool estMine;
     bool estMarquee;
-} Case;
+    int nbMines;  // Nombre de mines adjacentes
+} cell;
 
 typedef struct {
     int largeur;
     int longueur;
-    Case *cases;
+    cell *cases;
 } Grille;
 
 extern DonneesImageRGB *images[NB_IMAGES];

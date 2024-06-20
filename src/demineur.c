@@ -2,8 +2,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <stdbool.h>
 
 #define NB_IMAGES 12
+
+
+
+
 
 DonneesImageRGB* images[NB_IMAGES];  // Tableau pour stocker les images chargées
 
@@ -33,14 +38,20 @@ DonneesImageRGB* compresseImage(DonneesImageRGB *image) {
 
 void chargeImages() {
     char filename[20];
-    for (int i = 0; i <= 8; i++) {
-        sprintf(filename, "./BMP/%d.bmp", i);
+    for (int i = 0; i < 4; i++) {
+        sprintf(filename, "./BMP/%d.bmp", i + 1);
         images[i] = compresseImage(lisBMPRGB(filename));
+        if (!images[i]) {
+            fprintf(stderr, "Failed to load image %s\n", filename);
+        }
     }
+    // Assure-toi que les images spéciales sont également chargées correctement.
     images[9] = lisBMPRGB("./BMP/drapeau.bmp");
     images[10] = lisBMPRGB("./BMP/mine.bmp");
     images[11] = lisBMPRGB("./BMP/case.bmp");
 }
+
+
 
 void libereImages() {
     for (int i = 0; i < NB_IMAGES; i++) {
@@ -52,13 +63,16 @@ void libereImages() {
 
 void initialiseGrille(Grille *grille) {
     srand(time(NULL));
-    grille->cases = malloc(grille->largeur * grille->longueur * sizeof(Case));
+    grille->cases = malloc(grille->largeur * grille->longueur * sizeof(cell));
     for (int y = 0; y < grille->longueur; y++) {
         for (int x = 0; x < grille->largeur; x++) {
-            grille->cases[y * grille->largeur + x] = (Case){false, rand() % 6 == 0, false};
+            grille->cases[y * grille->largeur + x] = (cell){false, rand() % 6 == 0, false, 0}; // Initialiser nbMines à 0 ou autre logique appropriée
         }
     }
 }
+
+
+
 
 void dessineJeu(Grille *grille) {
     effaceFenetre(128, 128, 128);
@@ -76,15 +90,20 @@ void dessineGrille(Grille *grille) {
         for (int x = 0; x < grille->largeur; x++) {
             int posX = x * (largeur_grille / LARGEUR_TABLEAU) + LARGEUR_FENETRE / 4;
             int posY = y * (hauteur_grille / HAUTEUR_TABLEAU) + HAUTEUR_FENETRE / 6;
-            int index = grille->cases[y * grille->largeur + x].estRevelee ? 
-            (grille->cases[y * grille->largeur + x].estMine ? 10 : 
-            (compterMinesAdjacentes(grille, x, y) + 1)) : 9;
-
-            //int index = grille->cases[y * grille->largeur + x].estRevelee ? (grille->cases[y * grille->largeur + x].estMine ? 10 : (compterMinesAdjacentes(grille, x, y) + 1)) : 9;
+            int index = 11;  // Index par défaut pour une case non révélée
+            if (grille->cases[y * grille->largeur + x].estRevelee) {
+                index = grille->cases[y * grille->largeur + x].estMine ? 10 : grille->cases[y * grille->largeur + x].nbMines;
+                if (index > 4) index = 11; // S'assurer que l'index reste valide
+            } else if (grille->cases[y * grille->largeur + x].estMarquee) {
+                index = 9;  // Index pour le drapeau
+            }
             ecrisImage(posX, posY, images[index]->largeurImage, images[index]->hauteurImage, images[index]->donneesRGB);
         }
     }
 }
+
+
+
 
 
 
@@ -114,12 +133,12 @@ void gestionEvenement(EvenementGfx evenement) {
             break;
         case BoutonSouris:
             if (etatBoutonSouris() == GaucheAppuye) {
-                int x = abscisseSouris() / (LARGEUR_GRILLE/LARGEUR_TABLEAU);
-                int y = ordonneeSouris() / (HAUTEUR_GRILLE/HAUTEUR_TABLEAU);
+                int x = (abscisseSouris() - LARGEUR_FENETRE / 4) * LARGEUR_TABLEAU / LARGEUR_FENETRE;
+                int y = (ordonneeSouris() - HAUTEUR_FENETRE / 6) * HAUTEUR_TABLEAU / HAUTEUR_FENETRE;
                 reveleCase(&grille, x, y);
             } else if (etatBoutonSouris() == DroiteAppuye) {
-                int x = abscisseSouris() / (LARGEUR_GRILLE/LARGEUR_TABLEAU);
-                int y = ordonneeSouris() / (HAUTEUR_GRILLE/HAUTEUR_TABLEAU);
+                int x = (abscisseSouris() - LARGEUR_FENETRE / 4) * LARGEUR_TABLEAU / LARGEUR_FENETRE;
+                int y = (ordonneeSouris() - HAUTEUR_FENETRE / 6) * HAUTEUR_TABLEAU / HAUTEUR_FENETRE;
                 marqueDrapeau(&grille, x, y);
             }
             break;
@@ -129,7 +148,7 @@ void gestionEvenement(EvenementGfx evenement) {
 }
 
 void reveleCase(Grille *grille, int x, int y) {
-    Case *c = &grille->cases[y * grille->largeur + x];
+    cell *c = &grille->cases[y * grille->largeur + x];
     if (!c->estRevelee && !c->estMarquee) {
         c->estRevelee = true;
         if (c->estMine) {
@@ -157,7 +176,7 @@ void reveleCase(Grille *grille, int x, int y) {
 
 void marqueDrapeau(Grille *grille, int x, int y) {
     if (x >= 0 && x < grille->largeur && y >= 0 && y < grille->longueur) {
-        Case *c = &grille->cases[y * grille->largeur + x];
+        cell *c = &grille->cases[y * grille->largeur + x];
         if (!c->estRevelee) {
             c->estMarquee = !c->estMarquee;
         }
@@ -179,3 +198,4 @@ int compterMinesAdjacentes(const Grille *grille, int x, int y) {
     }
     return count;
 }
+
