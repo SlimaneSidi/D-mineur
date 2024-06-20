@@ -8,7 +8,7 @@
 #define TAILLE_CASE 32
 
 static DonneesImageRGB* images[NB_IMAGES] = {0};  // Tableau pour stocker les images chargées
-
+static int loose = 0;
 DonneesImageRGB* compresseImage(DonneesImageRGB *image) {
     if (!image) {
         printf("Image NULL !!!\n");
@@ -91,19 +91,24 @@ void dessineJeu(Grille *grille) {
     effaceFenetre(128, 128, 128);
     couleurCourante(96, 96, 96);
     epaisseurDeTrait(2);
-    rectangle(largeurFenetre() / 4, hauteurFenetre() / 6, largeurFenetre() * 9 / 10, hauteurFenetre() * 9 / 10);
+    rectangle(largeurFenetre() / 3, hauteurFenetre() / 6, largeurFenetre() * 2/3, hauteurFenetre() * 9 / 10);
     dessineGrille(grille);
+    if(loose == 1){
+        couleurCourante(255, 0, 0);
+        rectangle(0, 0, 1920, 1080);
+        couleurCourante(0, 0, 0);
+        afficheChaine("Perdu BOUFFON", 50, largeurFenetre()/3, hauteurFenetre()/2);
+
+    }
 }
 
  void dessineGrille(Grille *grille) {
     //int largeur_grille = (largeurFenetre() * 9 / 10) - (largeurFenetre() / 4);
     //int hauteur_grille = (hauteurFenetre() * 9 / 10) - (hauteurFenetre() / 6);
-
      for (int y = 0; y < grille->hauteur; y++) {
          for (int x = 0; x < grille->largeur; x++) {
             // int posX = x * (largeur_grille / LARGEUR_TABLEAU) + largeurFenetre() / 4;
-            // int posY = y * (hauteur_grille / HAUTEUR_TABLEAU) + hauteurFenetre() / 6;
-
+            // int posY = y * (hauteur_grille / HAUTEUR_TABLEAU) + hauteurFenetre(
             int index = 11;  // Index par défaut pour une case non révélée
             if (grille->cases[y * grille->largeur + x].estRevelee) {
                 index = grille->cases[y * grille->largeur + x].estMine ? 10 : grille->cases[y * grille->largeur + x].nbMines;
@@ -113,7 +118,8 @@ void dessineJeu(Grille *grille) {
            }
             int posX = x*images[index]->largeurImage;
             int posY = y*images[index]->hauteurImage;
-            ecrisImage(posX, posY, images[index]->largeurImage, images[index]->hauteurImage, images[index]->donneesRGB);
+            ecrisImage(posX, posY, images[index]->largeurImage,images[index]->hauteurImage,images[index]->donneesRGB);
+            //ecrisImage(posX+(largeurFenetre() / 3), (hauteurFenetre() / 6)+posY, images[index]->largeurImage,images[index]->hauteurImage,images[index]->donneesRGB);
         }
      }
  }
@@ -134,8 +140,10 @@ void gestionEvenement(EvenementGfx evenement) {
             break;
         case Temporisation:
             rafraichisFenetre();
+
             break;
         case Affichage:
+
             dessineJeu(&grille);
             break;
         case Clavier:
@@ -151,9 +159,10 @@ void gestionEvenement(EvenementGfx evenement) {
         case BoutonSouris:
             // ;int x = (abscisseSouris() - largeurFenetre() / 4) * LARGEUR_TABLEAU / largeurFenetre();
             // int y = (ordonneeSouris() - hauteurFenetre() / 6) * HAUTEUR_TABLEAU / hauteurFenetre();
-            ;int x = abscisseSouris() / TAILLE_CASE;
+            int x = abscisseSouris() / TAILLE_CASE;
             int y = ordonneeSouris() / TAILLE_CASE;
             if (etatBoutonSouris() == GaucheAppuye) {
+                //peut etre remplacer x et y lors du centrage de a grille.
                 reveleCase(&grille, x, y);
             } else if (etatBoutonSouris() == DroiteAppuye) {
                 marqueDrapeau(&grille, x, y);
@@ -169,27 +178,28 @@ void reveleCase(Grille *grille, int x, int y) {
     // if (!c->estRevelee && !c->estMarquee)
     {
         c->estRevelee = true;
-        // if (c->estMine) {
-        //     // Logique de fin de jeu, montrer toutes les mines par exemple
-        // }
-        // else
-        {
-            int adjacentMines = compterMinesAdjacentes(grille, x, y);
-            if (adjacentMines == 0) {
-                // Révéler récursivement les cases adjacentes sans mines
-                for (int dy = -1; dy <= 1; dy++) {
-                    for (int dx = -1; dx <= 1; dx++) {
-                        if (dx != 0 || dy != 0) {
-                            int nx = x + dx;
-                            int ny = y + dy;
-                            if (nx >= 0 && nx < grille->largeur && ny >= 0 && ny < grille->hauteur && !grille->cases[ny * grille->largeur + nx].estRevelee) {
-                                reveleCase(grille, nx, ny);
-                            }
+        printf("%d\n",c->estMine);
+         if (c->estMine) {
+            loose += 1;
+            printf("loose : %d\n",loose);
+         }
+        
+        int adjacentMines = compterMinesAdjacentes(grille, x, y);
+        if (adjacentMines == 0) {
+            // Révéler récursivement les cases adjacentes sans mines
+            for (int dy = -1; dy <= 1; dy++) {
+                for (int dx = -1; dx <= 1; dx++) {
+                    if (dx != 0 || dy != 0) {
+                        int nx = x + dx;
+                        int ny = y + dy;
+                        if (nx >= 0 && nx < grille->largeur && ny >= 0 && ny < grille->hauteur && !grille->cases[ny * grille->largeur + nx].estRevelee) {
+                            reveleCase(grille, nx, ny);
                         }
                     }
                 }
             }
         }
+        
     }
 }
 
