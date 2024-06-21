@@ -97,7 +97,7 @@ void dessineJeu(Grille *grille) {
         couleurCourante(255, 0, 0);
         rectangle(0, 0, 1920, 1080);
         couleurCourante(0, 0, 0);
-        afficheChaine("Perdu BOUFFON", 50, largeurFenetre()/3, hauteurFenetre()/2);
+        afficheChaine("Tu as perdu", 50, largeurFenetre()/3, hauteurFenetre()/2);
 
     }
 }
