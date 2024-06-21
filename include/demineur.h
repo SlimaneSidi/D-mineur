@@ -34,6 +34,7 @@ void libereImages(void);
 void reveleCase(Grille *grille, int x, int y);
 void marqueDrapeau(Grille *grille, int x, int y);
 int compterMinesAdjacentes(const Grille *grille, int x, int y);
+void affichePerdu(int value);
 
 #endif
 
