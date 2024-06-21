@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "../include/gridhandler.h"
 #include "../include/main.h"
 
 void initTab(int longu, int haut)
@@ -27,7 +26,7 @@ void afficheTab(void)
     {
         for (int y = 0; y < Longueur1; y++)
         {
-            if (map[x][y].cellRevealed)
+            if (map[x][y].cellRevealed == 1)
             {
                 if (map[x][y].isMine)
                 {

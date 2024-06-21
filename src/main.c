@@ -8,8 +8,13 @@
 cell map[Longueur1][Hauteur1];
 
 
-int main(void)
+int main(int argc, char **argv)
 {
+
+    initialiseGfx(argc, argv);
+    prepareFenetreGraphique("Démineur Facile", LARGEUR_FENETRE, HAUTEUR_FENETRE);
+    lanceBoucleEvenements();
+
     initTab(Longueur1, Hauteur1);
 
     gestionEvent();
@@ -21,12 +26,13 @@ void gestionEvent(void)
 {
     int x, y;
 
-    afficheTab();
+    
+    //afficheTab();
 
-    printf("Entrez les coordonnées de départ (x y): ");
-    scanf("%d %d", &x, &y);
+    //printf("Entrez les coordonnées de départ (x y): ");
+    //scanf("%d %d", &x, &y);
 
-    map[x][y].cellRevealed = 1;
+    //map[x][y].cellRevealed = 1;
 
     placeMines(NbMines1, Longueur1, Hauteur1);
     closestMines(Longueur1, Hauteur1);

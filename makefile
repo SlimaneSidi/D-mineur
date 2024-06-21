@@ -4,7 +4,7 @@ CFLAGS := -Wall -O2 -o
 BUILDDIR := ./build
 INCLUDE := ./include
 SRC := ./src
-SRCFILES := main.c gameloop.c gridhandler.c
+SRCFILES := main.c gridhandler.c demineur.c
 OBJFILES := $(patsubst %.c, $(BUILDDIR)/%.o, $(SRCFILES))
 
 all: $(BUILDDIR) libisentlib.a zubr
@@ -16,7 +16,7 @@ libisentlib.a:
 	make -C gfxlib/
 
 zubr: $(OBJFILES)
-	$(CC) $(CFLAGS) $@ $^ gfxlib/build/libisentlib.a -lm -lglut -lGL -pthread 
+	$(CC) $(CFLAGS) $@ $^ gfxlib/build/libisentlib.a -lX11 -lm -lglut -lGL -pthread 
 
 $(BUILDDIR)/%.o: $(SRC)/%.c
 	$(CC) $(CFLAGS) $@ -c $< -Wno-unused-result
