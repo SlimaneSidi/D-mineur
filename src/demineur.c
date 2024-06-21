@@ -3,12 +3,14 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdbool.h>
+#include <GL/freeglut.h>
 
 #define NB_IMAGES 12
 #define TAILLE_CASE 32
 
 static DonneesImageRGB* images[NB_IMAGES] = {0};  // Tableau pour stocker les images chargées
 static int loose = 0;
+static int looseTimer = 0;
 DonneesImageRGB* compresseImage(DonneesImageRGB *image) {
     if (!image) {
         printf("Image NULL !!!\n");
@@ -49,7 +51,7 @@ void chargeImages() {
             fprintf(stderr, "Failed to load image %s\n", filename);
         }
     }
-    // Assure-toi que les images spéciales sont également chargées correctement.
+    // Assure que les images sont chargeees
     images[9] = compresseImage(lisBMPRGB("./BMP/drapeau.bmp"));
     if (!images[9]) {
         fprintf(stderr, "Failed to load image %s\n", "./BMP/drapeau.bmp");
@@ -79,7 +81,7 @@ void initialiseGrille(Grille *grille) {
     grille->cases = calloc(grille->largeur * grille->hauteur, sizeof(cell));
     for (int y = 0; y < grille->hauteur; y++) {
         for (int x = 0; x < grille->largeur; x++) {
-            grille->cases[y * grille->largeur + x] = (cell){rand() % 6 == 0, false, false}; // Initialiser nbMines à 0 ou autre logique appropriée
+            grille->cases[y * grille->largeur + x] = (cell){rand() % 6 == 0, false, false, 0}; // Initialiser nbMines à 0 ou autre logique appropriée
         }
     }
 }
@@ -93,13 +95,13 @@ void dessineJeu(Grille *grille) {
     epaisseurDeTrait(2);
     rectangle(largeurFenetre() / 3, hauteurFenetre() / 6, largeurFenetre() * 2/3, hauteurFenetre() * 9 / 10);
     dessineGrille(grille);
-    if(loose == 1){
-        couleurCourante(255, 0, 0);
-        rectangle(0, 0, 1920, 1080);
-        couleurCourante(0, 0, 0);
-        afficheChaine("Tu as perdu", 50, largeurFenetre()/3, hauteurFenetre()/2);
+     if(looseTimer == 1){
+         couleurCourante(255, 0, 0);
+         rectangle(0, 0, 1920, 1080);
+         couleurCourante(0, 0, 0);
+         afficheChaine("Tu as perdu", 50, largeurFenetre()/3, hauteurFenetre()/2);
 
-    }
+     }
 }
 
  void dessineGrille(Grille *grille) {
@@ -111,7 +113,7 @@ void dessineJeu(Grille *grille) {
             // int posY = y * (hauteur_grille / HAUTEUR_TABLEAU) + hauteurFenetre(
             int index = 11;  // Index par défaut pour une case non révélée
             if (grille->cases[y * grille->largeur + x].cellRevealed) {
-                if (grille->cases[y * grille->largeur + x].isMine) index = 10;
+                index = grille->cases[y * grille->largeur + x].isMine ? 10 : grille->cases[y * grille->largeur + x].nbMines;
                 //if (index > 4) index = 11; // S'assurer que l'index reste valide
             } else if (grille->cases[y * grille->largeur + x].closestMine) {
                 index = 9;  // Index pour le drapeau
@@ -171,7 +173,16 @@ void gestionEvenement(EvenementGfx evenement) {
         default:
             break;
     }
+
+     if (loose == 1) { // Vérifiez si la condition de perte est vraie
+         glutTimerFunc(1000, affichePerdu, 0); 
+     }
+ }
+
+void affichePerdu(int value) {
+    looseTimer = 1; 
 }
+
 
 void reveleCase(Grille *grille, int x, int y) {
     cell *c = &grille->cases[y * grille->largeur + x];

@@ -26,6 +26,7 @@ typedef struct cell
     int isMine;
     int closestMine;
     int cellRevealed;
+    int nbMines;
 } cell;
 
 
@@ -40,6 +41,8 @@ typedef struct Grille {
 void gestionEvenement(EvenementGfx evenement);
 void initTab(int longu, int haut); // Terminal
 void afficheTab(void);  // Terminal
+
+
 void initialiseGrille(Grille *grille);
 void dessineJeu(Grille *grille);
 void dessineGrille(Grille *grille);
@@ -48,9 +51,10 @@ void libereImages(void);
 void reveleCase(Grille *grille, int x, int y);
 void marqueDrapeau(Grille *grille, int x, int y);
 int compterMinesAdjacentes(const Grille *grille, int x, int y);
+void affichePerdu(int value);
 
 
-extern cell map[Longueur1][Hauteur1];
+extern cell map[Longueur1][Hauteur1]; //// attention GLOBAL
 
 void gestionEvent(void);
 

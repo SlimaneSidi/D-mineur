@@ -15,9 +15,9 @@ int main(int argc, char **argv)
     prepareFenetreGraphique("Démineur Facile", LARGEUR_FENETRE, HAUTEUR_FENETRE);
     lanceBoucleEvenements();
 
-    initTab(Longueur1, Hauteur1);
+    //initTab(Longueur1, Hauteur1);
 
-    gestionEvent();
+    //gestionEvent();
 
     return 0;
 }
