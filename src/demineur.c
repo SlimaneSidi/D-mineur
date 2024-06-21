@@ -180,7 +180,6 @@ void gestionEvenement(EvenementGfx evenement) {
  }
 
 void affichePerdu(int value) {
-    printf("glut\n");
     looseTimer = 1; 
 }
 
