@@ -175,7 +175,7 @@ void gestionEvenement(EvenementGfx evenement) {
 }
 
 void affichePerdu(int value) {
-   // looseTimer = 1; 
+     looseTimer = 1; 
 }
 
 
@@ -194,7 +194,7 @@ void reveleCase(Grille *grille, int x, int y) {
         if (c->estMine) {
             loose = 1;
             printf("Perdu : %d\n", loose);
-            return; // Arrête la révélation si une mine est trouvée
+            return; // si mine arreter revelation
         }
 
         // Calcule les mines adjacentes
@@ -213,7 +213,6 @@ void reveleCase(Grille *grille, int x, int y) {
         }
     }
 }
-
 
 
 void marqueDrapeau(Grille *grille, int x, int y) {
