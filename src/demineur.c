@@ -82,7 +82,7 @@ void initialiseGrille(Grille *grille) {
     grille->cases = calloc(grille->largeur * grille->hauteur, sizeof(cell));
     for (int y = 0; y < grille->hauteur; y++) {
         for (int x = 0; x < grille->largeur; x++) {
-            grille->cases[y * grille->largeur + x] = (cell){false, rand() % 6 == 0, false, 0}; // Initialiser nbMines à 0 ou autre logique appropriée
+            grille->cases[y * grille->largeur + x] = (cell){false, rand() % 6 == 0, false, 0}; 
         }
     }
 }
@@ -171,43 +171,49 @@ void gestionEvenement(EvenementGfx evenement) {
 
      if (loose == 1) { // Vérifiez si la condition de perte est vraie
          glutTimerFunc(1000, affichePerdu, 0); 
-     }
- }
+    }
+}
 
 void affichePerdu(int value) {
-    looseTimer = 1; 
+   // looseTimer = 1; 
 }
 
 
 void reveleCase(Grille *grille, int x, int y) {
+    // Vérifie que les coordonnées sont valides
+    if (x < 0 || x >= grille->largeur || y < 0 || y >= grille->hauteur) return;
+
+    // Accès à la case
     cell *c = &grille->cases[y * grille->largeur + x];
-    // if (!c->estRevelee && !c->estMarquee)
-    {
+
+    // Ne procède que si la case n'est ni révélée ni marquée
+    if (!c->estRevelee && !c->estMarquee) {
         c->estRevelee = true;
-        printf("%d\n",c->estMine);
-         if (c->estMine) {
-            loose += 1;
-            printf("loose : %d\n",loose);
-         }
+        printf("Mine: %d\n", c->estMine);
         
-        int adjacentMines = compterMinesAdjacentes(grille, x, y);
-        if (adjacentMines == 0) {
-            // Révéler récursivement les cases adjacentes sans mines
-            for (int dy = -1; dy <= 1; dy++) {
-                for (int dx = -1; dx <= 1; dx++) {
-                    if (dx != 0 || dy != 0) {
-                        int nx = x + dx;
-                        int ny = y + dy;
-                        if (nx >= 0 && nx < grille->largeur && ny >= 0 && ny < grille->hauteur && !grille->cases[ny * grille->largeur + nx].estRevelee) {
-                            reveleCase(grille, nx, ny);
+        if (c->estMine) {
+            loose = 1;
+            printf("Perdu : %d\n", loose);
+            return; // Arrête la révélation si une mine est trouvée
+        }
+
+        // Calcule les mines adjacentes
+        if (c->nbMines == 0) {
+            c->nbMines = compterMinesAdjacentes(grille, x, y);
+            // Révèle récursivement les cases adjacentes si pas de mines
+            if (c->nbMines == 0) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    for (int dx = -1; dx <= 1; dx++) {
+                        if (dx != 0 || dy != 0) {
+                            reveleCase(grille, x + dx, y + dy);
                         }
                     }
                 }
             }
         }
-        
     }
 }
+
 
 
 void marqueDrapeau(Grille *grille, int x, int y) {

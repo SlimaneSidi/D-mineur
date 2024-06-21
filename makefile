@@ -4,7 +4,7 @@ CFLAGS := -Wall -O2 -o
 BUILDDIR := ./build
 INCLUDE := ./include
 SRC := ./src
-SRCFILES := main.c demineur.c
+SRCFILES := main.c demineur.c temps.c
 OBJFILES := $(patsubst %.c, $(BUILDDIR)/%.o, $(SRCFILES))
 
 all: $(BUILDDIR) libisentlib.a exec
