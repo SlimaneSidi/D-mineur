@@ -11,6 +11,7 @@
 static DonneesImageRGB* images[NB_IMAGES] = {0};  // Tableau pour stocker les images chargées
 static int loose = 0;
 static int looseTimer = 0;
+
 DonneesImageRGB* compresseImage(DonneesImageRGB *image) {
     if (!image) {
         printf("Image NULL !!!\n");
@@ -111,10 +112,9 @@ void dessineJeu(Grille *grille) {
          for (int x = 0; x < grille->largeur; x++) {
             // int posX = x * (largeur_grille / LARGEUR_TABLEAU) + largeurFenetre() / 4;
             // int posY = y * (hauteur_grille / HAUTEUR_TABLEAU) + hauteurFenetre(
-            int index = 11;  // Index par défaut pour une case non révélée
+            int index = 11;  // Index case non révélée
             if (grille->cases[y * grille->largeur + x].estRevelee) {
                 index = grille->cases[y * grille->largeur + x].estMine ? 10 : grille->cases[y * grille->largeur + x].nbMines;
-                //if (index > 4) index = 11; // S'assurer que l'index reste valide
             } else if (grille->cases[y * grille->largeur + x].estMarquee) {
                 index = 9;  // Index pour le drapeau
            }
@@ -125,11 +125,6 @@ void dessineJeu(Grille *grille) {
         }
      }
  }
-
-
-// void dessineGrille(Grille *grille){
-
-
 
 
 void gestionEvenement(EvenementGfx evenement) {
